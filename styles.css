@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Borel&family=Poppins:wght@300;500&display=swap');
+
+/* =========================
+   Root tokens (colors, type, spacing)
+   ========================= */
+:root{
+  /* Colors & layout */
+  --bg:#fff8f1; --ink:#2f241e; --card:#fff; --border:#ead9c6;
+  --maxw:1200px;
+
+  /* ===== Smaller fluid modular type scale ===== */
+  --fs-body:  clamp(0.875rem, 0.80rem + 0.40vw, 1rem);       /* ~14→16px */
+  --fs-small: clamp(0.75rem,  0.70rem + 0.30vw, 0.875rem);   /* ~12→14px */
+
+  --fs-h1:    clamp(1.75rem, 1.40rem + 2vw, 2.5rem);         /* ~28→40px */
+  --fs-h2:    clamp(1.25rem, 1.10rem + 1vw, 1.75rem);        /* ~20→28px */
+  --fs-h3:    clamp(1.125rem, 1.00rem + 0.6vw, 1.5rem);      /* ~18→24px */
+
+  --lh-tight: 1.2;
+  --lh-normal: 1.55;
+  --lh-comfy: 1.7;
+
+  /* Spacing */
+  --sp-1: clamp(12px, 0.6rem + 0.3vw, 16px);
+  --sp-2: clamp(16px, 0.9rem + 0.6vw, 24px);
+  --sp-3: clamp(24px, 1.1rem + 1.2vw, 36px);
+  --sp-4: clamp(32px, 1.2rem + 2vw, 56px);
+}
+
+/* =========================
+   Base
+   ========================= */
+html, body { height:100%; }
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+}
+*, *::before, *::after { box-sizing: border-box; }
+img, svg { max-width: 100%; height: auto; }
+
+.container{
+  box-sizing: border-box;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-left: clamp(20px, 5vw, 80px);
+  padding-right: clamp(20px, 5vw, 80px);
+}
+
+/* Links */
+a{ color: var(--ink); text-decoration: underline; transition: color .2s ease; }
+a:hover{ color:#a35b2c; }
+header a, footer a{
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: .02em;
+}
+header a:hover, footer a:hover{ color:#a35b2c; }
+
+/* =========================
+   Headings
+   ========================= */
+h1 { font-family:'Borel', cursive; font-size: var(--fs-h1); line-height: var(--lh-tight); margin: 0 0 0.25em; }
+h2, h3, h4, h5, h6 { font-family:'Poppins', sans-serif; font-weight:500; line-height: 1.2; margin: 0 0 0.4em; }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+
+/* =========================
+   Header & Footer
+   ========================= */
+header, footer { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+header.container, footer.container{ padding-block: 18px 6px; }
+.home:not(.revealed) header,
+.home:not(.revealed) footer { display:none; }
+
+/* =========================
+   Gate & Oven
+   ========================= */
+.gate-wrap{ min-height:100dvh; display:grid; place-items:center; text-align:center; }
+.gate{ display:grid; place-items:center; gap:12px; }
+.gate-help{ margin:0; opacity:.75; font-size: var(--fs-small); line-height: var(--lh-comfy); }
+.oven-btn{ background:transparent; border:none; padding:0; cursor:pointer; }
+.oven-3d { position: relative; width: min(340px, 70vw); height: auto; perspective: 900px; }
+.oven-svg { width:100%; height:auto; display:block; }
+#door3d {
+  position: absolute;
+  left: calc(68 / 320 * 100%);
+  top:  calc(104 / 320 * 100%);
+  width:  calc(184 / 320 * 100%);
+  height: calc(108 / 320 * 100%);
+  transform-origin: center bottom;
+  transform: rotateX(0deg);
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(.22, 1, .36, 1);
+  background:#fef3e3; border:3px solid #e2cdb5; border-radius:6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+}
+#door3d .pane {
+  position: absolute;
+  left:  calc(16 / 184 * 100%);
+  top:   calc(20 / 108 * 100%);
+  width: calc(152 / 184 * 100%);
+  height: calc(68 / 108 * 100%);
+  background:#fff7ea;
+  border:1px solid #e8d6c2;
+  border-radius:4px;
+}
+#door3d .handle {
+  position: absolute;
+  top: calc(6 / 108 * 100%);
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(40 / 184 * 100%);
+  height: calc(8 / 108 * 100%);
+  background:#d7b892;
+  border-radius:4px;
+}
+.gate-open #door3d { transform: rotateX(-92deg); }
+#oven-body{ fill:#fff; stroke:var(--border); stroke-width:2; }
+#oven-window{ fill:#fdf7ef; stroke:#e9d7c3; }
+#oven-knob1,#oven-knob2{ fill:#e6c39c; }
+#oven-base{ fill:#e9d7c3; }
+
+/* =========================
+   Revealed View
+   ========================= */
+.home.revealed .gate-wrap { display:none; }
+.stage-wrap{ display:none; }
+.revealed .stage-wrap{ display:block; }
+.page-head.container{ margin-block: 12px 40px; text-align:center; }
+.page-head h1{ margin-bottom: 0.25em; }
+.page-head .sub{ margin:0; opacity:.85; font-size: var(--fs-small); line-height: var(--lh-comfy); }
+
+.stage.container{ display:grid; gap: 18px; align-items: start; animation: fadeIn .35s ease both; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px) } to { opacity:1; transform:none } }
+@media (min-width: 860px){ .stage.container{ grid-template-columns: 1fr 1fr; } }
+
+.cookie-col{ display:grid; justify-items:center; }
+.cookie-box{ width:100%; max-width:560px; aspect-ratio:1/1; position:relative; }
+model-viewer{ width:100%; height:100%; background: radial-gradient(circle at center, rgba(0,0,0,.05) 0%, transparent 70%) !important; --poster-color:transparent; border-radius:50%; }
+
+.recipe{
+  width:100%;
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; box-shadow:0 6px 18px rgba(80,50,30,.06); padding:32px 28px;
+}
+.recipe h2{ margin:0 0 0.5em; font-family:'Poppins', sans-serif; font-weight:500; font-size: var(--fs-h2); }
+.recipe .subhead{
+  margin:1rem 0 0.4rem; font-weight:500; font-size: var(--fs-small);
+  line-height: var(--lh-normal); letter-spacing: .2px;
+}
+.recipe ul, .recipe ol{ margin:0; padding-left: 1.2em; }
+.recipe li{ margin:0.4rem 0; }
+
+/* =========================
+   Prose Pages
+   ========================= */
+.prose > * + * { margin-top: var(--sp-3); }
+.prose h1 { margin-bottom: 0.3em; line-height: 1.15; font-family:'Borel', cursive; }
+.prose h2, .prose h3 { margin-bottom: 0.3em; line-height: 1.2; font-family:'Poppins', sans-serif; font-weight:500; }
+.prose h2 { margin-top: var(--sp-4); }
+.prose h3 { margin-top: var(--sp-3); }
+.prose ul, .prose ol { padding-left: 1.2em; }
+.prose hr { margin: var(--sp-3) 0; border: 0; border-top: 1px solid var(--border); }
+.prose .lead { font-size: var(--fs-h3); line-height: var(--lh-comfy); }
+
+footer.container{ margin-top: 10px; opacity:.85; font-size: var(--fs-small); line-height: var(--lh-normal); }
