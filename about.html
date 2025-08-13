@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — Cookie of the Day</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="container">
+    <a href="./">🍪 Cookie of the Day</a>
+    <nav><a href="./about.html">about</a></nav>
+  </header>
+
+  <main class="container prose" style="padding-block: var(--sp-4);">
+      <h1>About</h1>
+
+
+<h2>Cookie of the Day is a playful AI experiment</h2>
+    <hr />
+
+    <section>
+      <h3>What it does</h3>
+      <p>
+        Each day, you get one cookie—chosen just for you—plus a quick recipe. Click the oven to reveal, then enjoy virtually playing with your food, or making it in real life!
+      </p>
+    </section>
+
+    <section>
+      <h3>How it's build</h3>
+      <ul>
+        <li>ChatGPT for HTML, CSS (fluid type & spacing), and vanilla JavaScript</li>
+        <li><code>&lt;model-viewer&gt;</code> for rendering GLB models</li>
+        <li>Meshy AI for AI‑generated cookie models</li>
+        <li>Local storage to keep your daily cookie consistent</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Your privacy</h3>
+      <p>
+        The site stores a minimal anonymous ID and your daily cookie in your browser’s local storage only.
+        Nothing is sent to a server.
+      </p>
+    </section>
+
+    <section>
+      <h3>Get in touch</h3>
+      <p>
+        I also create user experiences that convert, check out my portfolio <a href="https://hannahashleydesign.com" target=_"blank">here</a>.
+    </section>
+  </main>
+
+  <footer class="container">
+    <span>© <span id="year"></span> Cookie of the Day</span>
+    <a href="https://hannahashleydesign.com" target=_"blank">by Hannah Ashley Design</a>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
