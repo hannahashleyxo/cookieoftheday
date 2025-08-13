@@ -1,423 +1,272 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <link rel="icon" href="COTD-Icon.ico" type="image/ico" />
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Cookie of the Day</title>
-    <link rel="stylesheet" href="styles.css" />
-    <script
-      type="module"
-      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
-    ></script>
-  </head>
-  <body class="home">
-    <!-- Header (hidden until reveal on home due to CSS rules) -->
-    <header class="container">
-      <a href="./">🍪 Cookie of the Day</a>
-      <nav><a href="./about.html">about</a></nav>
-    </header>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cookie of the Day</title>
+  <meta name="title" content="Cookie of the Day 🍪"/>
+  <meta name="description" content ="Find out what your cookie is today."/>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="COTD-Icon.ico" type="image/ico" />
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body class="home">
+  <!-- Header (hidden until reveal on home due to CSS rules) -->
+  <header class="container">
+    <a href="./">🍪 Cookie of the Day</a>
+    <nav><a href="./about.html">about</a></nav>
+  </header>
 
-    <!-- GATE: only thing visible initially -->
-    <div class="gate-wrap">
-      <section id="gate" class="gate" aria-labelledby="gate-title">
-        <button
-          id="ovenBtn"
-          class="oven-btn"
-          aria-labelledby="gate-title"
-          aria-describedby="gate-help"
-        >
-          <div class="oven-3d">
-            <!-- Oven body as SVG (door handled by HTML element below) -->
-            <svg
-              class="oven-svg"
-              viewBox="0 0 320 320"
-              xmlns="http://www.w3.org/2000/svg"
-              role="img"
-              aria-label="Oven"
-            >
-              <rect
-                id="oven-body"
-                x="24"
-                y="28"
-                width="272"
-                height="240"
-                rx="16"
-              />
-              <circle id="oven-knob1" cx="88" cy="54" r="6" />
-              <circle id="oven-knob2" cx="232" cy="54" r="6" />
-              <rect
-                id="oven-window"
-                x="52"
-                y="84"
-                width="216"
-                height="148"
-                rx="8"
-              />
-              <!-- Window rect used for sizing/positioning -->
-              <rect id="windowBox" x="68" y="104" width="184" height="108" />
-              <rect
-                id="oven-base"
-                x="24"
-                y="268"
-                width="272"
-                height="12"
-                rx="6"
-              />
-            </svg>
+  <!-- GATE: only thing visible initially -->
+  <div class="gate-wrap">
+    <section id="gate" class="gate" aria-labelledby="gate-title">
+      <button id="ovenBtn" class="oven-btn" aria-labelledby="gate-title" aria-describedby="gate-help">
+        <div class="oven-3d">
+          <!-- Oven body as SVG (door handled by HTML element below) -->
+          <svg class="oven-svg" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Oven">
+            <rect id="oven-body" x="24" y="28" width="272" height="240" rx="16"/>
+            <circle id="oven-knob1" cx="88" cy="54" r="6"/>
+            <circle id="oven-knob2" cx="232" cy="54" r="6"/>
+            <rect id="oven-window" x="52" y="84" width="216" height="148" rx="8"/>
+            <!-- Window rect used for sizing/positioning -->
+            <rect id="windowBox" x="68" y="104" width="184" height="108"/>
+            <rect id="oven-base" x="24" y="268" width="272" height="12" rx="6"/>
+          </svg>
 
-            <!-- Real 3D door (bottom hinge) -->
-            <div id="door3d" aria-hidden="true">
-              <div class="pane"></div>
-              <div class="handle"></div>
-            </div>
-          </div>
-        </button>
-
-        <h1 id="gate-title" class="gate-title">Reveal Today’s Cookie</h1>
-        <p id="gate-help" class="gate-help">
-          Click the oven to open and reveal your cookie + recipe.
-        </p>
-      </section>
-    </div>
-
-    <!-- REVEALED VIEW -->
-    <div class="stage-wrap" aria-live="polite">
-      <div class="page-head container">
-        <h1 id="cookie-title">Today’s Cookie</h1>
-        <p class="sub" id="cookie-fact">Loading…</p>
-      </div>
-
-      <section class="stage container">
-        <!-- Left: cookie -->
-        <div class="cookie-col">
-          <div class="cookie-box">
-            <model-viewer
-              id="cookie3d"
-              camera-controls
-              interaction-prompt="none"
-              disable-pan
-              auto-rotate
-              auto-rotate-delay="3500"
-              environment-image="neutral"
-              exposure="1.05"
-              shadow-intensity="0.7"
-            >
-            </model-viewer>
+          <!-- Real 3D door (bottom hinge) -->
+          <div id="door3d" aria-hidden="true">
+            <div class="pane"></div>
+            <div class="handle"></div>
           </div>
         </div>
+      </button>
 
-        <!-- Right: recipe -->
-        <article class="recipe">
-          <h2 id="recipe-title">Cookie Recipe</h2>
+      <h1 id="gate-title" class="gate-title">Reveal Today’s Cookie</h1>
+      <p id="gate-help" class="gate-help">Click the oven to open and reveal your cookie + recipe.</p>
+    </section>
+  </div>
 
-          <div class="subhead">Ingredients</div>
-          <ul id="ingredients-list">
-            <li>Loading…</li>
-          </ul>
-
-          <div class="subhead">Instructions</div>
-          <ol id="instructions-list">
-            <li>Loading…</li>
-          </ol>
-        </article>
-      </section>
+  <!-- REVEALED VIEW -->
+  <div class="stage-wrap" aria-live="polite">
+    <div class="page-head container">
+      <h1 id="cookie-title">Today’s Cookie</h1>
+      <p class="sub" id="cookie-fact">Loading…</p>
     </div>
 
-    <footer class="container">
-      <span>© <span id="year"></span> Cookie of the Day</span>
-      <a href="https://hannahashleydesign.com" target="_blank"
-        >by Hannah Ashley Design</a
-      >
-      <!-- Dev reset shows when ?dev is in URL -->
-      <a href="#" id="devReset" style="margin-left: auto; display: none"
-        >Reset</a
-      >
-    </footer>
+    <section class="stage container">
+      <!-- Left: cookie -->
+      <div class="cookie-col">
+        <div class="cookie-box">
+          <model-viewer id="cookie3d"
+            camera-controls interaction-prompt="none" disable-pan
+            auto-rotate auto-rotate-delay="3500"
+            environment-image="neutral" exposure="1.05" shadow-intensity="0.7">
+          </model-viewer>
+        </div>
+      </div>
 
-    <script type="module">
-      /* ===== Cookie library (models/) ===== */
-      const COOKIES = [
-        {
-          id: "choc_chip",
-          name: "Chocolate Chip",
-          asset: "models/choc_chip.glb",
-          fact: "Chocolate chip cookies were invented by accident in the 1930s at the Toll House Inn.",
-          ingredients: [
-            "1 cup butter, softened",
-            "¾ cup sugar",
-            "¾ cup brown sugar",
-            "2 eggs",
-            "2 tsp vanilla",
-            "2¼ cups flour",
-            "1 tsp baking soda",
-            "½ tsp salt",
-            "2 cups chocolate chips",
-          ],
-          instructions: [
-            "Preheat oven to 350°F / 175°C. Line baking sheet.",
-            "Cream butter and sugars until fluffy; beat in eggs and vanilla.",
-            "Whisk dry ingredients; add to wet until just combined.",
-            "Fold in chocolate chips.",
-            'Scoop 2 tbsp mounds, 2" apart. Bake 9–11 min until edges set.',
-            "Cool on sheet 3 min, then transfer to rack.",
-          ],
-        },
-        {
-          id: "oat_raisin",
-          name: "Oatmeal Raisin",
-          asset: "models/oat_raisin.glb",
-          fact: "Oatmeal raisin cookies became popular as a “healthier” sweet in early 1900s cookbooks.",
-          ingredients: [
-            "1 cup butter",
-            "1 cup brown sugar",
-            "½ cup sugar",
-            "2 eggs",
-            "2 tsp vanilla",
-            "1½ cups flour",
-            "1 tsp baking soda",
-            "½ tsp salt",
-            "1 tsp cinnamon",
-            "3 cups old‑fashioned oats",
-            "1 cup raisins",
-          ],
-          instructions: [
-            "Preheat oven to 350°F / 175°C. Line baking sheet.",
-            "Cream butter and sugars; beat in eggs and vanilla.",
-            "Whisk flour, soda, salt, cinnamon; mix into wet.",
-            "Fold in oats and raisins.",
-            "Scoop 2 tbsp mounds. Bake 10–12 min until lightly golden.",
-            "Rest 5 min on sheet, then cool on rack.",
-          ],
-        },
-        {
-          id: "sugar",
-          name: "Sugar Cookie",
-          asset: "models/snickerdoodle.glb",
-          fact: "Sugar cookies trace back to 1700s Pennsylvania German kitchens—simple, sturdy, and celebratory.",
-          ingredients: [
-            "1 cup butter",
-            "1 cup sugar",
-            "1 egg",
-            "1½ tsp vanilla",
-            "2½ cups flour",
-            "1 tsp baking powder",
-            "½ tsp salt",
-          ],
-          instructions: [
-            "Preheat oven to 350°F / 175°C. Line baking sheet.",
-            "Cream butter and sugar; beat in egg and vanilla.",
-            "Whisk dry ingredients; mix into wet just until combined.",
-            "Chill 20–30 min if dough is soft.",
-            "Roll or scoop; bake 8–10 min until just set.",
-            "Cool on rack.",
-          ],
-        },
-        {
-          id: "peanut_butter",
-          name: "Peanut Butter",
-          asset: "models/peanut_butter.glb",
-          fact: "The classic criss‑cross fork marks help them bake evenly and signal that nutty aroma.",
-          ingredients: [
-            "1 cup peanut butter",
-            "½ cup sugar",
-            "½ cup brown sugar",
-            "1 egg",
-            "1 tsp vanilla",
-            "1 cup flour",
-            "½ tsp baking soda",
-            "¼ tsp salt",
-          ],
-          instructions: [
-            "Preheat oven to 350°F / 175°C. Line baking sheet.",
-            "Mix peanut butter, sugars, egg, vanilla until smooth.",
-            "Stir in flour, soda, salt until combined.",
-            "Scoop and roll balls; press fork criss‑cross.",
-            "Bake 8–10 min; cool on sheet 5 min, then rack.",
-          ],
-        },
-        {
-          id: "snickerdoodle",
-          name: "Snickerdoodle",
-          asset: "models/snickerdoodle.glb",
-          fact: "Cream of tartar gives snickerdoodles their signature tang and chewy texture.",
-          ingredients: [
-            "½ cup butter",
-            "½ cup shortening",
-            "1½ cups sugar",
-            "2 eggs",
-            "2 tsp vanilla",
-            "2¾ cups flour",
-            "2 tsp cream of tartar",
-            "1 tsp baking soda",
-            "½ tsp salt",
-            "Cinnamon sugar (¼ cup sugar + 1 tbsp cinnamon)",
-          ],
-          instructions: [
-            "Preheat oven to 375°F / 190°C. Line baking sheet.",
-            "Cream butter, shortening, and sugar; beat in eggs and vanilla.",
-            "Whisk dry ingredients; add to wet just to combine.",
-            "Scoop balls; roll in cinnamon sugar.",
-            "Bake 8–10 min until puffy with crackly tops.",
-            "Cool briefly on sheet, then rack.",
-          ],
-        },
-      ];
+      <!-- Right: recipe -->
+      <article class="recipe">
+        <h2 id="recipe-title">Cookie Recipe</h2>
 
-      /* ===== Deterministic daily pick ===== */
-      function getVisitorId() {
-        let vid = localStorage.getItem("visitorId");
-        if (!vid) {
-          vid =
-            crypto.randomUUID?.() ??
-            Date.now().toString(36) + Math.random().toString(36).slice(2);
-          localStorage.setItem("visitorId", vid);
-        }
-        return vid;
-      }
-      function todayKeyUTC() {
-        const d = new Date();
-        return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(
-          2,
-          "0"
-        )}-${String(d.getUTCDate()).padStart(2, "0")}`;
-      }
-      async function hashToIndex(seed, modulo) {
-        const buf = await crypto.subtle.digest(
-          "SHA-256",
-          new TextEncoder().encode(seed)
-        );
-        const b = new Uint8Array(buf);
-        const n = ((b[0] << 24) | (b[1] << 16) | (b[2] << 8) | b[3]) >>> 0;
-        return n % modulo;
-      }
-      async function getTodaysCookie() {
-        const vid = getVisitorId();
-        const day = todayKeyUTC();
-        const cache = JSON.parse(localStorage.getItem("todaysCookie") || "{}");
-        if (cache.day === day && cache.cookieId)
-          return COOKIES.find((c) => c.id === cache.cookieId) || COOKIES[0];
-        const idx = await hashToIndex(`${vid}|${day}`, COOKIES.length);
-        const chosen = COOKIES[idx];
-        localStorage.setItem(
-          "todaysCookie",
-          JSON.stringify({ day, cookieId: chosen.id })
-        );
-        return chosen;
-      }
+        <div class="subhead">Ingredients</div>
+        <ul id="ingredients-list"><li>Loading…</li></ul>
 
-      /* ===== Render cookie + header + recipe ===== */
-      async function renderCookie() {
-        const cookie = await getTodaysCookie();
+        <div class="subhead">Instructions</div>
+        <ol id="instructions-list"><li>Loading…</li></ol>
+      </article>
+    </section>
+  </div>
 
-        // Top header
-        document.getElementById("cookie-title").textContent = cookie.name;
-        document.getElementById("cookie-fact").textContent = cookie.fact;
+  <footer class="container">
+    <span>© <span id="year"></span> Cookie of the Day</span>
+    <a href="https://hannahashleydesign.com" target="_blank">by Hannah Ashley Design</a>
+    <!-- Dev reset shows when ?dev is in URL -->
+    <a href="#" id="devReset" style="margin-left:auto; display:none;">Reset</a>
+  </footer>
 
-        // Viewer
-        const mv = document.getElementById("cookie3d");
-        mv.src = cookie.asset;
-        mv.setAttribute("alt", cookie.name);
+  <script type="module">
+    /* ===== Cookie library (models/) ===== */
+    const COOKIES = [
+      { id:'choc_chip', name:'Chocolate Chip', asset:'models/choc_chip.glb',
+        fact:'Chocolate chip cookies were invented by accident in the 1930s at the Toll House Inn.',
+        ingredients:[
+          '1 cup butter, softened','¾ cup sugar','¾ cup brown sugar',
+          '2 eggs','2 tsp vanilla','2¼ cups flour','1 tsp baking soda','½ tsp salt','2 cups chocolate chips'
+        ],
+        instructions:[
+          'Preheat oven to 350°F / 175°C. Line baking sheet.',
+          'Cream butter and sugars until fluffy; beat in eggs and vanilla.',
+          'Whisk dry ingredients; add to wet until just combined.',
+          'Fold in chocolate chips.',
+          'Scoop 2 tbsp mounds, 2" apart. Bake 9–11 min until edges set.',
+          'Cool on sheet 3 min, then transfer to rack.'
+        ]
+      },
+      { id:'oat_raisin', name:'Oatmeal Raisin', asset:'models/oat_raisin.glb',
+        fact:'Oatmeal raisin cookies became popular as a “healthier” sweet in early 1900s cookbooks.',
+        ingredients:[
+          '1 cup butter','1 cup brown sugar','½ cup sugar',
+          '2 eggs','2 tsp vanilla','1½ cups flour','1 tsp baking soda','½ tsp salt','1 tsp cinnamon',
+          '3 cups old‑fashioned oats','1 cup raisins'
+        ],
+        instructions:[
+          'Preheat oven to 350°F / 175°C. Line baking sheet.',
+          'Cream butter and sugars; beat in eggs and vanilla.',
+          'Whisk flour, soda, salt, cinnamon; mix into wet.',
+          'Fold in oats and raisins.',
+          'Scoop 2 tbsp mounds. Bake 10–12 min until lightly golden.',
+          'Rest 5 min on sheet, then cool on rack.'
+        ]
+      },
+      { id:'sugar', name:'Sugar Cookie', asset:'models/snickerdoodle.glb',
+        fact:'Sugar cookies trace back to 1700s Pennsylvania German kitchens—simple, sturdy, and celebratory.',
+        ingredients:[
+          '1 cup butter','1 cup sugar','1 egg','1½ tsp vanilla',
+          '2½ cups flour','1 tsp baking powder','½ tsp salt'
+        ],
+        instructions:[
+          'Preheat oven to 350°F / 175°C. Line baking sheet.',
+          'Cream butter and sugar; beat in egg and vanilla.',
+          'Whisk dry ingredients; mix into wet just until combined.',
+          'Chill 20–30 min if dough is soft.',
+          'Roll or scoop; bake 8–10 min until just set.',
+          'Cool on rack.'
+        ]
+      },
+      { id:'peanut_butter', name:'Peanut Butter', asset:'models/peanut_butter.glb',
+        fact:'The classic criss‑cross fork marks help them bake evenly and signal that nutty aroma.',
+        ingredients:[
+          '1 cup peanut butter','½ cup sugar','½ cup brown sugar',
+          '1 egg','1 tsp vanilla','1 cup flour','½ tsp baking soda','¼ tsp salt'
+        ],
+        instructions:[
+          'Preheat oven to 350°F / 175°C. Line baking sheet.',
+          'Mix peanut butter, sugars, egg, vanilla until smooth.',
+          'Stir in flour, soda, salt until combined.',
+          'Scoop and roll balls; press fork criss‑cross.',
+          'Bake 8–10 min; cool on sheet 5 min, then rack.'
+        ]
+      },
+      { id:'snickerdoodle', name:'Snickerdoodle', asset:'models/snickerdoodle.glb',
+        fact:'Cream of tartar gives snickerdoodles their signature tang and chewy texture.',
+        ingredients:[
+          '½ cup butter','½ cup shortening','1½ cups sugar',
+          '2 eggs','2 tsp vanilla','2¾ cups flour','2 tsp cream of tartar','1 tsp baking soda','½ tsp salt',
+          'Cinnamon sugar (¼ cup sugar + 1 tbsp cinnamon)'
+        ],
+        instructions:[
+          'Preheat oven to 375°F / 190°C. Line baking sheet.',
+          'Cream butter, shortening, and sugar; beat in eggs and vanilla.',
+          'Whisk dry ingredients; add to wet just to combine.',
+          'Scoop balls; roll in cinnamon sugar.',
+          'Bake 8–10 min until puffy with crackly tops.',
+          'Cool briefly on sheet, then rack.'
+        ]
+      },
+    ];
 
-        // Recipe panel
-        document.getElementById(
-          "recipe-title"
-        ).textContent = `${cookie.name} Cookie Recipe`;
+    /* ===== Deterministic daily pick ===== */
+    function getVisitorId(){
+      let vid = localStorage.getItem('visitorId');
+      if (!vid) { vid = crypto.randomUUID?.() ?? (Date.now().toString(36)+Math.random().toString(36).slice(2)); localStorage.setItem('visitorId', vid); }
+      return vid;
+    }
+    function todayKeyUTC(){ const d=new Date(); return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`; }
+    async function hashToIndex(seed, modulo){
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(seed));
+      const b = new Uint8Array(buf); const n=((b[0]<<24)|(b[1]<<16)|(b[2]<<8)|b[3])>>>0; return n % modulo;
+    }
+    async function getTodaysCookie(){
+      const vid=getVisitorId(); const day=todayKeyUTC();
+      const cache=JSON.parse(localStorage.getItem('todaysCookie')||'{}');
+      if (cache.day===day && cache.cookieId) return COOKIES.find(c=>c.id===cache.cookieId)||COOKIES[0];
+      const idx=await hashToIndex(`${vid}|${day}`, COOKIES.length);
+      const chosen=COOKIES[idx]; localStorage.setItem('todaysCookie', JSON.stringify({day, cookieId: chosen.id})); return chosen;
+    }
 
-        const ul = document.getElementById("ingredients-list");
-        ul.innerHTML = "";
-        cookie.ingredients.forEach((line) => {
-          const li = document.createElement("li");
-          li.textContent = line;
-          ul.appendChild(li);
-        });
+    /* ===== Render cookie + header + recipe ===== */
+    async function renderCookie(){
+      const cookie=await getTodaysCookie();
 
-        const ol = document.getElementById("instructions-list");
-        ol.innerHTML = "";
-        cookie.instructions.forEach((line) => {
-          const li = document.createElement("li");
-          li.textContent = line;
-          ol.appendChild(li);
-        });
+      // Top header
+      document.getElementById('cookie-title').textContent = cookie.name;
+      document.getElementById('cookie-fact').textContent  = cookie.fact;
 
-        mv.addEventListener("error", () => {
-          ul.innerHTML =
-            "<li>Model failed to load. Check the <code>models/</code> path or re‑export as GLB (binary).</li>";
-          console.error("Model failed to load:", cookie.asset);
+      // Viewer
+      const mv=document.getElementById('cookie3d');
+      mv.src=cookie.asset; mv.setAttribute('alt',cookie.name);
+
+      // Recipe panel
+      document.getElementById('recipe-title').textContent = `${cookie.name} Cookie Recipe`;
+
+      const ul=document.getElementById('ingredients-list'); ul.innerHTML='';
+      cookie.ingredients.forEach(line=>{ const li=document.createElement('li'); li.textContent=line; ul.appendChild(li); });
+
+      const ol=document.getElementById('instructions-list'); ol.innerHTML='';
+      cookie.instructions.forEach(line=>{ const li=document.createElement('li'); li.textContent=line; ol.appendChild(li); });
+
+      mv.addEventListener('error', ()=>{
+        ul.innerHTML='<li>Model failed to load. Check the <code>models/</code> path or re‑export as GLB (binary).</li>';
+        console.error('Model failed to load:', cookie.asset);
+      });
+    }
+
+    /* ===== Gate behavior ===== */
+    const gate = document.getElementById('gate');
+    const ovenBtn = document.getElementById('ovenBtn');
+
+    function isRevealedToday(){ return localStorage.getItem('cookieGateRevealed') === todayKeyUTC(); }
+    function markRevealedToday(){ localStorage.setItem('cookieGateRevealed', todayKeyUTC()); }
+
+    async function revealFlow(){
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Open the door
+      gate.classList.add('gate-open');
+      if (!reduceMotion){ await new Promise(r=>setTimeout(r,700)); }
+
+      // Switch to revealed view
+      document.body.classList.add('revealed');
+      await renderCookie();
+
+      // Persist for the day
+      markRevealedToday();
+    }
+
+    // Dev reset (?dev shows link in footer)
+    function setupDevReset(){
+      const link=document.getElementById('devReset');
+      if (location.search.includes('dev')) {
+        link.style.display='inline';
+        link.addEventListener('click', e=>{
+          e.preventDefault();
+          localStorage.removeItem('cookieGateRevealed');
+          localStorage.removeItem('todaysCookie');
+          alert('Reset complete for testing. Reloading…');
+          location.reload();
         });
       }
+    }
 
-      /* ===== Gate behavior ===== */
-      const gate = document.getElementById("gate");
-      const ovenBtn = document.getElementById("ovenBtn");
+    // Init
+    (function init(){
+      document.getElementById('year').textContent = new Date().getFullYear();
+      setupDevReset();
 
-      function isRevealedToday() {
-        return localStorage.getItem("cookieGateRevealed") === todayKeyUTC();
+      if (isRevealedToday()){
+        document.body.classList.add('revealed');
+        renderCookie();
+        return;
       }
-      function markRevealedToday() {
-        localStorage.setItem("cookieGateRevealed", todayKeyUTC());
-      }
+      ovenBtn.addEventListener('click', revealFlow, { once:true });
+    })();
+  </script>
 
-      async function revealFlow() {
-        const reduceMotion = window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches;
-
-        // Open the door
-        gate.classList.add("gate-open");
-        if (!reduceMotion) {
-          await new Promise((r) => setTimeout(r, 700));
-        }
-
-        // Switch to revealed view
-        document.body.classList.add("revealed");
-        await renderCookie();
-
-        // Persist for the day
-        markRevealedToday();
-      }
-
-      // Dev reset (?dev shows link in footer)
-      function setupDevReset() {
-        const link = document.getElementById("devReset");
-        if (location.search.includes("dev")) {
-          link.style.display = "inline";
-          link.addEventListener("click", (e) => {
-            e.preventDefault();
-            localStorage.removeItem("cookieGateRevealed");
-            localStorage.removeItem("todaysCookie");
-            alert("Reset complete for testing. Reloading…");
-            location.reload();
-          });
-        }
-      }
-
-      // Init
-      (function init() {
-        document.getElementById("year").textContent = new Date().getFullYear();
-        setupDevReset();
-
-        if (isRevealedToday()) {
-          document.body.classList.add("revealed");
-          renderCookie();
-          return;
-        }
-        ovenBtn.addEventListener("click", revealFlow, { once: true });
-      })();
-    </script>
-
-    <noscript>
-      <p
-        class="container"
-        style="
-          padding: 1rem;
-          background: #fff;
-          border: 1px solid var(--border);
-          border-radius: 12px;
-        "
-      >
-        Enable JavaScript to reveal and view today’s cookie.
-      </p>
-    </noscript>
-  </body>
+  <noscript>
+    <p class="container" style="padding:1rem; background:#fff; border:1px solid var(--border); border-radius:12px;">
+      Enable JavaScript to reveal and view today’s cookie.
+    </p>
+  </noscript>
+</body>
 </html>
